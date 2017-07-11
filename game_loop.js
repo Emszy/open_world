@@ -97,7 +97,6 @@ onload = function()
   populate_layer3(layer3);
   populate_layer3(layer3);
   populate_layer3(layer3);
-  lake_beach();
 
   initialize_shapes();
   player = new player(100, 1, 1);

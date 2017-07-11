@@ -267,18 +267,6 @@ function draw_layer0(map_array, pos_x, pos_y, size_x = 128, size_y = 128)
         case 3:
           context.drawImage(water3, pos_x, pos_y, size_x, size_y);
           break;
-        case 4:
-          context.drawImage(sand1, pos_x, pos_y, size_x, size_y);
-          break;
-        case 5:
-          context.drawImage(sand2, pos_x, pos_y, size_x, size_y);
-          break;
-        case 6:
-          context.drawImage(sand3, pos_x, pos_y, size_x, size_y);
-          break;
-        case 7:
-          context.drawImage(sand4, pos_x, pos_y, size_x, size_y);
-          break;
         }
       }
         x = x + 1;
@@ -287,22 +275,6 @@ function draw_layer0(map_array, pos_x, pos_y, size_x = 128, size_y = 128)
       pos_y = pos_y + size_y;
     }
   }
-
-function lake_beach()
-{
-  var x = 0;
-    while (layer3[x])
-    {
-      m = random_int(4, 7)
-      if (layer3[x] <= 3)
-      {
-
-          layer3[x - 1] = m;
-      }
-      x++;
-    }
-  }
-
 
 
 mid_dirt.src  = "sprites/terrain/split_terrain/mid_dirt.png";
