@@ -18,6 +18,11 @@ var grass1 = new Image();
 var grass2 = new Image();
 var grass3 = new Image();
 
+function random_int(min,max)
+{
+    return Math.floor(Math.random()*(max-min+1)+min);
+}
+
 function populate_layer0()
 {
   var m;
@@ -26,7 +31,7 @@ function populate_layer0()
   for (x = 0; x < 23000; x++)
   {
     perc = (Math.random());
-    m = Math.floor((Math.random() * 3) + 1);
+    m = random_int(1, 3);
     layer0[x] = m;
     if (perc < 0.90)
     {
@@ -34,8 +39,8 @@ function populate_layer0()
       {
         layer0[x + n] = m;
         layer0[x - n] = m;
-        layer0[x + 200 + n] = m;
-        layer0[x + 200 - n] = m;
+        layer0[x + 151 + n] = m;
+        layer0[x + 151 - n] = m;
         n++;
       }
     }
@@ -51,13 +56,13 @@ function populate_layer1()
     {
       for (var j = 0; j < 151; j++)
       {
-        m = Math.floor((Math.random() * 3) + 1);
+        m = random_int(4, 7);
         if (j < 40 && i > 120)
         {
           layer1[x] = m;
         }
         else
-          layer1[x] = 100;
+          layer1[x] = 0;
         x++;
       }
     }
@@ -71,21 +76,18 @@ function populate_layer2()
   {
     for (var j = 0; j < 151; j++)
     {
-      m = Math.floor((Math.random() * 3) + 1);
+      m = random_int(8, 11);
       if (j >= 39 && i > 110)
       {
         layer2[x] = m;
       }
       else
-        layer2[x] = 100;
+        layer2[x] = 0;
       x++;
     }
   }
 }
-function random_int(min,max)
-{
-    return Math.floor(Math.random()*(max-min+1)+min);
-}
+
 function populate_layer3(layer)
 {
   var m = 0;
@@ -99,7 +101,7 @@ function populate_layer3(layer)
   {
     for (var j = 0; j < 151; j++)
     {
-      m = Math.floor((Math.random() * 2) + 1);
+       m = random_int(12, 14);
       if (j >= start + m && j <= end - m && i > start_y - m && i < end_y + m)
       {
         layer[x + 20] = m;
@@ -123,158 +125,106 @@ function populate_layer3(layer)
   }
 }
 
+function consolidate_layers()
+{
+  var layers = [];
+  var x = 0;
+
+  for (var i = 0; i < 151; i++)
+  {
+    for (var j = 0; j < 151; j++)
+    {
+      if (layer0[x] > 0)
+      {
+        layers[x] = new layer_obj(layer0[x], i * 128, j * 128, 128)
+        game_map[x] = layers[x];
+      }
+      if (layer1[x] > 0)
+      {
+        layers[x] = new layer_obj(layer1[x], i * 128, j * 128, 128)
+        game_map[x] = layers[x];
+      }
+      if (layer2[x] > 0)
+      {
+        layers[x] = new layer_obj(layer2[x], i * 128, j * 128, 128)
+        game_map[x] = layers[x];
+      }
+      if (layer3[x] > 0)
+      {
+        layers[x] = new layer_obj(layer3[x], i * 128, j * 128, 128)
+        game_map[x] = layers[x];
+      }
+      x++;
+    }
+  }
+}
+
 
 function draw_layer0(map_array, pos_x, pos_y, size_x = 128, size_y = 128)
+{
+  var x = 0;
+  for (var i = 0; i < 151; i++)
   {
-
-    var x = 0;
-    pos_y -= 128;
-    for (var i = 0; i < 151; i++)
+    pos_x = map_pos_x;
+    for (var j = 0; j < 151; j++)
     {
-      pos_x = map_pos_x - 128;
-      for (var j = 0; j < 151; j++)
+      if (pos_x >= (canvas.width / 2) - (win_width * 2)
+        && pos_y >= (canvas.height / 2) - (win_height * 2)
+        && pos_x <= (canvas.width / 2) + (win_width * 2)
+        && pos_y <= (canvas.height / 2) + (win_height * 2))
       {
-        if (pos_x >= (canvas.width / 2) - (win_width * 2)
-          && pos_y >= (canvas.height / 2) - (win_height * 2)
-          && pos_x <= (canvas.width / 2) + (win_width * 2)
-          && pos_y <= (canvas.height / 2) + (win_height * 2))
+        switch (map_array[x].id)
         {
-        switch (map_array[x])
-        {
-        case 1:
-          context.drawImage(mid_dirt, pos_x, pos_y, size_x, size_y);
-          break;
-        case 2:
-          context.drawImage(mid_dirt2, pos_x, pos_y, size_x, size_y);
-          break;
-        case 3:
-          context.drawImage(mid_dirt3, pos_x, pos_y, size_x, size_y);
-          break;
-        case 4:
-          context.drawImage(light_dirt, pos_x, pos_y, size_x, size_y);
-          break;
-        case 5:
-          context.drawImage(grey_dirt, pos_x, pos_y, size_x, size_y);
-          break;
+          case 1:
+            context.drawImage(mid_dirt, pos_x, pos_y, size_x, size_y);
+            break;
+          case 2:
+            context.drawImage(mid_dirt2, pos_x, pos_y, size_x, size_y);
+            break;
+          case 3:
+            context.drawImage(mid_dirt3, pos_x, pos_y, size_x, size_y);
+            break;
+          case 4:
+            context.drawImage(snow, pos_x, pos_y, size_x, size_y);
+            break;
+          case 5:
+            context.drawImage(snow1, pos_x, pos_y, size_x, size_y);
+            break;
+          case 6:
+            context.drawImage(snow2, pos_x, pos_y, size_x, size_y);
+            break;
+          case 7:
+            context.drawImage(snow3, pos_x, pos_y, size_x, size_y);
+            break;
+          case 8:
+            context.drawImage(sand1, pos_x, pos_y, size_x, size_y);
+            break;
+          case 9:
+            context.drawImage(sand2, pos_x, pos_y, size_x, size_y);
+            break;
+          case 10:
+            context.drawImage(sand3, pos_x, pos_y, size_x, size_y);
+            break;
+          case 11:
+            context.drawImage(sand4, pos_x, pos_y, size_x, size_y);
+            break;
+          case 12:
+            context.drawImage(water1, pos_x, pos_y, size_x, size_y);
+            break;
+          case 13:
+            context.drawImage(water2, pos_x, pos_y, size_x, size_y);
+            break;
+          case 14:
+            context.drawImage(water3, pos_x, pos_y, size_x, size_y);
+            break;
         }
       }
-        x = x + 1;
-        pos_x = pos_x + size_x;
-      }
-      pos_y = pos_y + size_y;
+      x = x + 1;
+      pos_x = pos_x + size_x;
     }
+    pos_y = pos_y + size_y;
   }
-
-  function draw_layer1(map_array, pos_x, pos_y, size_x = 128, size_y = 128)
-  {
-
-    var x = 0;
-    pos_y -= 128;
-    for (var i = 0; i < 151; i++)
-    {
-      pos_x = map_pos_x - 128;
-      for (var j = 0; j < 151; j++)
-      {
-        if (pos_x >= (canvas.width / 2) - (win_width * 2)
-          && pos_y >= (canvas.height / 2) - (win_height * 2)
-          && pos_x <= (canvas.width / 2) + (win_width * 2)
-          && pos_y <= (canvas.height / 2) + (win_height * 2))
-        {
-        switch (map_array[x])
-        {
-        case 1:
-          context.drawImage(snow, pos_x, pos_y, size_x, size_y);
-          break;
-        case 2:
-          context.drawImage(snow1, pos_x, pos_y, size_x, size_y);
-          break;
-        case 3:
-          context.drawImage(snow2, pos_x, pos_y, size_x, size_y);
-          break;
-        case 4:
-          context.drawImage(snow3, pos_x, pos_y, size_x, size_y);
-          break;
-        }
-      }
-        x = x + 1;
-        pos_x = pos_x + size_x;
-      }
-      pos_y = pos_y + size_y;
-    }
-  }
-
-  function draw_layer2(map_array, pos_x, pos_y, size_x = 128, size_y = 128)
-  {
-
-    var x = 0;
-    pos_y -= 128;
-    for (var i = 0; i < 151; i++)
-    {
-      pos_x = map_pos_x - 128;
-      for (var j = 0; j < 151; j++)
-      {
-        if (pos_x >= (canvas.width / 2) - (win_width * 2)
-          && pos_y >= (canvas.height / 2) - (win_height * 2)
-          && pos_x <= (canvas.width / 2) + (win_width * 2)
-          && pos_y <= (canvas.height / 2) + (win_height * 2))
-        {
-        switch (map_array[x])
-        {
-        case 1:
-          context.drawImage(sand1, pos_x, pos_y, size_x, size_y);
-          break;
-        case 2:
-          context.drawImage(sand2, pos_x, pos_y, size_x, size_y);
-          break;
-        case 3:
-          context.drawImage(sand3, pos_x, pos_y, size_x, size_y);
-          break;
-        case 4:
-          context.drawImage(sand4, pos_x, pos_y, size_x, size_y);
-          break;
-        }
-      }
-        x = x + 1;
-        pos_x = pos_x + size_x;
-      }
-      pos_y = pos_y + size_y;
-    }
-  }
-
-  function draw_layer3(map_array, pos_x, pos_y, size_x = 128, size_y = 128)
-  {
-
-    var x = 0;
-    pos_y -= 128;
-    for (var i = 0; i < 151; i++)
-    {
-      pos_x = map_pos_x - 128;
-      for (var j = 0; j < 151; j++)
-      {
-        if (pos_x >= (canvas.width / 2) - (win_width * 2)
-          && pos_y >= (canvas.height / 2) - (win_height * 2)
-          && pos_x <= (canvas.width / 2) + (win_width * 2)
-          && pos_y <= (canvas.height / 2) + (win_height * 2))
-        {
-        switch (map_array[x])
-        {
-        case 1:
-          context.drawImage(water1, pos_x, pos_y, size_x, size_y);
-          break;
-        case 2:
-          context.drawImage(water2, pos_x, pos_y, size_x, size_y);
-          break;
-        case 3:
-          context.drawImage(water3, pos_x, pos_y, size_x, size_y);
-          break;
-        }
-      }
-        x = x + 1;
-        pos_x = pos_x + size_x;
-      }
-      pos_y = pos_y + size_y;
-    }
-  }
+}
 
 
 mid_dirt.src  = "sprites/terrain/split_terrain/mid_dirt.png";

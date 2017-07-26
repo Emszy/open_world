@@ -27,14 +27,6 @@ function drawTriangle(context, x, y, triangleWidth, triangleHeight, fillStyle)
   context.fill();
 }
 
-function draw_moon(offsetx, offsety)
-{
-    context.beginPath();
-    context.arc(50 + offsetx, 25 + offsety, 25, 0.6 * Math.PI, 1.3 * Math.PI);
-    context.bezierCurveTo(20 + offsetx, 5 + offsety, -4 + offsetx, 31 + offsety, 35 + offsetx, 50 + offsety);
-    context.fill();
-}
-
 function draw_polygon(x, y, numberOfSides, color, size)
 {
   var numberOfSides = numberOfSides;

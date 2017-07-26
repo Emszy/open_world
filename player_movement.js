@@ -6,8 +6,8 @@ function place_wall()
     {
       player.walls.push(player.squares.shift());
       player.walls[player.walls.length - 1].color = red;
-      player.walls[player.walls.length - 1].x = player_x;
-      player.walls[player.walls.length - 1].y = player_y;
+      player.walls[player.walls.length - 1].x = player_x + 32;
+      player.walls[player.walls.length - 1].y = player_y + 32;
     }
     keys[32] = false;
   }
@@ -21,8 +21,8 @@ function fire_bullet()
     {
       player.bullets.push(player.stars.shift());
       player.bullets[player.bullets.length - 1].color = red;
-      player.bullets[player.bullets.length - 1].x = player_x;
-      player.bullets[player.bullets.length - 1].y = player_y;
+      player.bullets[player.bullets.length - 1].x = player_x + 32;
+      player.bullets[player.bullets.length - 1].y = player_y + 32;
       player.bullets[player.bullets.length - 1].vel_x = 5;
       keys[39] = false;
   
@@ -34,8 +34,8 @@ function fire_bullet()
     {
       player.bullets.push(player.stars.shift());
       player.bullets[player.bullets.length - 1].color = red;
-      player.bullets[player.bullets.length - 1].x = player_x;
-      player.bullets[player.bullets.length - 1].y = player_y;
+      player.bullets[player.bullets.length - 1].x = player_x + 32;
+      player.bullets[player.bullets.length - 1].y = player_y + 32;
       player.bullets[player.bullets.length - 1].vel_x = -5;
       keys[37] = false;
   
@@ -47,8 +47,8 @@ function fire_bullet()
     {
       player.bullets.push(player.stars.shift());
       player.bullets[player.bullets.length - 1].color = red;
-      player.bullets[player.bullets.length - 1].x = player_x;
-      player.bullets[player.bullets.length - 1].y = player_y;
+      player.bullets[player.bullets.length - 1].x = player_x + 32;
+      player.bullets[player.bullets.length - 1].y = player_y + 32;
       player.bullets[player.bullets.length - 1].vel_y = -5;
       keys[38] = false;
     }
@@ -59,8 +59,8 @@ function fire_bullet()
     {
       player.bullets.push(player.stars.shift());
       player.bullets[player.bullets.length - 1].color = red;
-      player.bullets[player.bullets.length - 1].x = player_x;
-      player.bullets[player.bullets.length - 1].y = player_y;
+      player.bullets[player.bullets.length - 1].x = player_x + 32;
+      player.bullets[player.bullets.length - 1].y = player_y + 32;
       player.bullets[player.bullets.length - 1].vel_y = 5;
       keys[40] = false;
     }

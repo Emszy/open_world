@@ -1,3 +1,84 @@
+
+function spawn_shapes()
+{
+  spawn_castle();
+  spawn_castle_items();
+  spawn_player();
+  spawn_trees();
+  spawn_rocks();
+  spawn_squares();
+  spawn_stars();
+}
+
+function spawn_castle_items()
+{
+  for(var x = 0; x < crate.length; x++)
+  {
+    context.drawImage(castle_image, crate[x].atlas_pos_x, crate[x].atlas_pos_y, crate[x].size_x, crate[x].size_y, crate[x].map_pos_x + map_pos_x, crate[x].map_pos_y + map_pos_y, crate[x].map_size_x, crate[x].map_size_y);
+    collision(crate[x].map_pos_x, crate[x].map_pos_y);
+  }
+
+  for(var x = 0; x < anvils.length; x++)
+  {
+    context.drawImage(castle_image, anvils[x].atlas_pos_x, anvils[x].atlas_pos_y, anvils[x].size_x, anvils[x].size_y, anvils[x].map_pos_x + map_pos_x, anvils[x].map_pos_y + map_pos_y, anvils[x].map_size_x, anvils[x].map_size_y);
+    collision(crate[x].map_pos_x, crate[x].map_pos_y);
+
+  }
+}
+
+function spawn_castle()
+{
+  for(var x = 0; x < castles.length; x++)
+  {
+    for(var y = 0; y < castles[x].length; y++)
+    {
+      if (castles[x] && castles[x][y].map_pos_x - player_x < 900 && castles[x][y].map_pos_y - player_y < 900 && player_x - castles[x][y].map_pos_x < 900 && player_y - castles[x][y].map_pos_y < 900)
+      {
+        context.drawImage(castle_image, castles[x][y].atlas_pos_x, castles[x][y].atlas_pos_y, castles[x][y].size_x, castles[x][y].size_y, castles[x][y].map_pos_x + map_pos_x, castles[x][y].map_pos_y + map_pos_y, castles[x][y].map_size_x, castles[x][y].map_size_y);
+        if (castles[x][y].type == "castle wall")
+        {
+          collision(castles[x][y].map_pos_x, castles[x][y].map_pos_y, 128, 128);
+        }
+        else if (castles[x][y].type == "castle corner")
+        {
+          collision(castles[x][y].map_pos_x, castles[x][y].map_pos_y, 256, 256);
+        }
+      }
+    }
+  }
+}
+
+function spawn_rocks()
+{
+  var x = 0;
+  while (x < spawn_amount)
+  {
+      if (rock[x] && rock[x].x - player_x < 750 && rock[x].y - player_y < 750 && player_x - rock[x].x < 750 && player_y - rock[x].y < 750)
+      {
+          context.drawImage(rock[x].image, 0, 0, 128, 128, rock[x].x + map_pos_x, rock[x].y + map_pos_y, 128, 128);
+          context.drawImage(rock[x].mineral.image, rock[x].mineral.atlas_pos_x, rock[x].mineral.atlas_pos_y, 16, 16, rock[x].x + map_pos_x, rock[x].y + map_pos_y, 32, 32);
+          console.log(collision(rock[x].x, rock[x].y, 128, 128));
+      }
+    x++;
+  }
+}
+
+function spawn_trees()
+{
+  var x = 0;
+  while (x < trees.length)
+  {
+      if (trees[x] && trees[x].x - player_x < 750 && trees[x].y - player_y < 750 && player_x - trees[x].x < 750 && player_y - trees[x].y < 750)
+      {
+          context.drawImage(trees[x].image, trees[x].atlas_pos, 0, 128, 128, trees[x].x + map_pos_x, trees[x].y + map_pos_y, 128, 128);
+          console.log(collision(trees[x].x, trees[x].y, 128, 128, 1));
+
+      }
+    x++;
+  }
+
+}
+
 function spawn_squares()
 {
   var x = 0;
@@ -19,28 +100,6 @@ function spawn_squares()
 
 }
 
-function spawn_triangles()
-{
-  var x = 0;
-  x = 0;
-  while (x < spawn_amount)
-  {
-    if (triangle[x] && triangle[x].x - player_x < 750 && triangle[x].y - player_y < 750 && player_x - triangle[x].x < 750 && player_y - triangle[x].y < 750)
-    {
-      context.fillStyle = triangle[x].color;
-      drawTriangle(context, triangle[x].x + map_pos_x, triangle[x].y + map_pos_y, triangle[x].width, triangle[x].height, context.fill);
-      context.fillStyle = "black";
-    }
-    if (triangle[x] && triangle[x].x - player_x < 50 && triangle[x].y + triangle[x].hit_y - player_y < 50 && player_x - triangle[x].x - triangle[x].hit_x < 50 && player_y - triangle[x].y - triangle[x].hit_y < 50)
-    {
-      triangle[x].color = red;
-      player.triangles.push(triangle[x]);
-      triangle.splice(x, 1);
-    }
-      x++;
-  }
-
-}
 
 function spawn_stars()
 {
@@ -63,85 +122,4 @@ function spawn_stars()
     }
     x++;
   }
-}
-
-function spawn_moons()
-{
-  var x;
-
-  x = 0;
-  while (x < spawn_amount)
-  {
-    if (moon[x] && moon[x].x - player_x < 750 && moon[x].y - player_y < 750 && player_x - moon[x].x < 750 && player_y - moon[x].y < 750)
-    {
-      context.fillStyle = moon[x].color;
-      draw_moon(moon[x].x + map_pos_x, moon[x].y + map_pos_y);
-      context.fillStyle = "black";
-    }
-     if (moon[x] && moon[x].x + 30 - player_x < 30 && moon[x].y + 50 - player_y < 50 && player_x - moon[x].x  - 10 < 50 && player_y - moon[x].y - 10 < 50)
-    {
-      moon[x].color = red;
-      player.moons.push(moon[x]);
-      moon.splice(x, 1);
-    }
-    x++;
-  }
-}
-
-function spawn_hexagons()
-{
-  var x;
-
-  x = 0;
-  while (x < spawn_amount)
-  {
-    if (hexagons[x] && hexagons[x].x - player_x < 750 && hexagons[x].y - player_y < 750 && player_x - hexagons[x].x < 750 && player_y - hexagons[x].y < 750)
-    {
-      context.fillStyle = hexagons[x].color;
-      draw_polygon(hexagons[x].x + map_pos_x, hexagons[x].y + map_pos_y, hexagons[x].sides, hexagons[x].color, hexagons[x].size);
-      context.fillStyle = "black";
-    }
-     if (hexagons[x] && hexagons[x].x - player_x < 30 && hexagons[x].y - player_y < 50 && player_x - hexagons[x].x  < 50 && player_y - hexagons[x].y  < 50)
-    {
-      hexagons[x].color = red;
-      player.hexagons.push(hexagons[x]);
-      hexagons.splice(x, 1);
-    }
-    x++;
-  }
-
-}
-
-function spawn_octogons()
-{
-  var x;
-
-  x = 0;
-  while (x < spawn_amount)
-  {
-    if (octogons[x] && octogons[x].x - player_x < 750 && octogons[x].y - player_y < 750 && player_x - octogons[x].x < 750 && player_y - octogons[x].y < 750)
-    {
-      context.fillStyle = octogons[x].color;
-      draw_polygon(octogons[x].x + map_pos_x, octogons[x].y + map_pos_y, octogons[x].sides, octogons[x].color, octogons[x].size);
-      context.fillStyle = "black";
-    }
-     if (octogons[x] && octogons[x].x - player_x < 30 && octogons[x].y - player_y < 50 && player_x - octogons[x].x  < 50 && player_y - octogons[x].y  < 50)
-    {
-      player.octogons.push(octogons[x]);
-      octogons.splice(x, 1);
-    }
-    x++;
-  }
-}
-
-function spawn_shapes()
-{
-  
-  spawn_player();
-  spawn_squares();
-  spawn_triangles();
-  spawn_stars();
-  spawn_moons();
-  spawn_hexagons();
-  spawn_octogons();
 }

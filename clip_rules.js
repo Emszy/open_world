@@ -1,41 +1,38 @@
-function wall_clip()
+function collision(wall_x, wall_y, w = 64, h = 64, walkthrough = 0) 
 {
-  var x = 0;
-   while (player.walls[x])
+  var dx = (player_x + 64 / 2) - (wall_x + w / 2);
+  var dy = (player_y + 64 / 2) - (wall_y + h / 2);
+  var width = (64 + w) / 2;
+  var height = (64 + h) / 2;
+  var crossWidth = width * dy;
+  var crossHeight = height * dx;
+  var collision='none';
+  //
+  if(Math.abs(dx) <= width && Math.abs(dy) <= height)
+  {
+    if(crossWidth > crossHeight)
     {
-
-      if (player_x > player.walls[x].x - 40 && player_x < player.walls[x].x - 10 && player_y > player.walls[x].y - 35 && player_y < player.walls[x].y + 35 )
-      {
-        map_pos_x += vel_x;
-        player_x -= vel_x;
-        if(keys[65])
+      collision = ( crossWidth > (-crossHeight)) ? 'bottom' : 'left';
+    }
+    else
+    {
+      collision = (crossWidth > -(crossHeight)) ? 'right' : 'top';
+    }
+  }
+  if(walkthrough == 0)
+  {
+    if (collision == "bottom")
+    {
+        map_pos_y -= vel_y;
+        player_y += vel_y;
+        if(keys[83])
         {
-          map_pos_x -= vel_x;
-          player_x += vel_x;
-        }
-      }
-      if (player_x > player.walls[x].x + 10 && player_x < player.walls[x].x + 40 && player_y > player.walls[x].y - 35 && player_y < player.walls[x].y + 35 )
-      {
-        map_pos_x += vel_x;
-        player_x -= vel_x;
-        if(keys[68])
-        {
-          map_pos_x -= vel_x;
-          player_x += vel_x;
-        }
-      }
-      if (player_y > player.walls[x].y + 30 && player_y < player.walls[x].y + 40 && player_x > player.walls[x].x - 35 && player_x < player.walls[x].x + 35)
-      {
-         map_pos_y -= vel_y;
-         player_y += vel_y;
-         if(keys[83])
-          {
           map_pos_y += vel_y;
           player_y -= vel_y;
         }
-      }
-      if (player_y < player.walls[x].y - 30 && player_y > player.walls[x].y - 40 && player_x > player.walls[x].x - 35 && player_x < player.walls[x].x + 35)
-      {
+    }
+    if (collision == "top")
+    {
         map_pos_y -= vel_y;
         player_y += vel_y;
         if(keys[87])
@@ -43,7 +40,38 @@ function wall_clip()
           map_pos_y += vel_y;
           player_y -= vel_y;
         }
-      }
+    }
+    if (collision == "left")
+    {
+        map_pos_x += vel_x;
+        player_x -= vel_x;
+        if(keys[65])
+        {
+          map_pos_x -= vel_x;
+          player_x += vel_x;
+        }
+    }
+    if (collision == "right")
+    {
+        map_pos_x += vel_x;
+        player_x -= vel_x;
+        if(keys[68])
+        {
+          map_pos_x -= vel_x;
+          player_x += vel_x;
+        }
+    }
+  }
+  return (collision);
+}
+
+
+function wall_clip()
+{
+  var x = 0;
+   while (player.walls[x])
+    {
+      collision(player.walls[x].x, player.walls[x].y, 2, 2);
       x++;
     }
 }

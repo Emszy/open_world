@@ -2,7 +2,7 @@ function spawn_player()
 {
   context.fillStyle = "red";
   context.beginPath();
-  context.arc(canvas.width / 2 , canvas.height / 2 ,player.health / 4, 0, 2*Math.PI);
+  context.drawImage(player.image, canvas.width / 2 , canvas.height / 2, 64, 64);
   context.fill();
   context.fillStyle = "black";
 }
@@ -37,7 +37,6 @@ function spawn_wall()
   {
       if (player.walls[x] && player.walls[x] && player.walls[x].x - player_x < 750 && player.walls[x].y - player_y < 750 && player_x - player.walls[x].x < 750 && player_y - player.walls[x].y < 750)
       {
-
         context.beginPath();
         context.fillStyle = player.walls[x].color;
         context.rect((player.walls[x].x - 12) + map_pos_x, player.walls[x].y - 12 + map_pos_y, 25, 25);
