@@ -2,15 +2,27 @@ function spawn_player()
 {
   context.fillStyle = "red";
   context.beginPath();
+  context.rect((canvas.width / 2) + 8, (canvas.height / 2 - 20), player.health / 2, 4);
   context.drawImage(player.image, canvas.width / 2 , canvas.height / 2, 64, 64);
   context.fill();
   context.fillStyle = "black";
 }
+
 function spawn_player_items()
 {
+  health();
   spawn_wall();
   spawn_bullets();
   bullet_hit_wall();
+}
+
+function health()
+{
+  if(player.health < 0)
+  {
+    player.deaths++;
+    player.health = 100;
+  }
 }
 
 function spawn_bullets()

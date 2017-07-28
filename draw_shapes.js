@@ -48,7 +48,7 @@ function draw_squares(x, y, width, height, color)
 {
   context.beginPath();
   context.fillStyle = color;
-  context.rect(x + map_pos_x, y + map_pos_y , 25, 25);
+  context.rect(x + map_pos_x, y + map_pos_y , width, height);
   context.fill();
   context.fillStyle = "black";
 }

@@ -5,7 +5,7 @@ var player_x = canvas.width / 2;
 var player_y = canvas.height / 2;
 var vel_x = 0;
 var vel_y = 0;
-var maxSpeed = 8;
+var maxSpeed = 50;
 var total_map_width = 150 * 128 - 100;
 var total_map_height = 150 * 128 - 100;
 var win_width;
@@ -37,6 +37,17 @@ var layer1 = [];
 var layer2 = [];
 var layer3 = [];
 var game_map = [];
+
+var armor_bandit_img = new Image();
+var dark_knight_img = new Image();
+var forest_assassin_img = new Image();
+var armored_img = new Image();
+
+var arrow_img_up = new Image();
+var arrow_img_left = new Image();
+var arrow_img_right = new Image();
+var arrow_img_down = new Image();
+enemies = [];
 
 var keys = [];
 
@@ -73,6 +84,7 @@ function update()
 
 function draw()
 {	
+  console.log(player.health);
   draw_layer0(game_map, map_pos_x, map_pos_y);
   whatKey();
   move_player(vel_x, vel_y);
@@ -100,13 +112,25 @@ onload = function()
   consolidate_layers();
 
   initialize_shapes();
-  player = new player(100, 1, 1, "sprites/character/player/base/dwarf_f.png");
+  player = new player(100, 1, 1, "sprites/character/player/base/dwarf_m.png");
 	gameloop();
 };
 
 
 castle_src = "sprites/buildings/Castle2.png";
 castle_image.src = castle_src;
+
+armor_bandit_img.src = "sprites/enemies/armor_bandit.png";
+dark_knight_img.src = "sprites/enemies/dark_knight.png";
+forest_assassin_img.src = "sprites/enemies/leather.png";
+armored_img.src = "sprites/enemies/mixed_metal.png";
+
+arrow_img_up.src = "sprites/character/weapons/ammo/arrow_up.png";
+arrow_img_left.src = "sprites/character/weapons/ammo/arrow_left.png";
+arrow_img_right.src = "sprites/character/weapons/ammo/arrow_right.png";
+arrow_img_down.src = "sprites/character/weapons/ammo/arrow_down.png";
+
+mineral_srcs = "sprites/item/roguelikeitems.png";
 
 
 tree_srcs[0] = "sprites/resources/trees/green trees.png";
@@ -133,6 +157,6 @@ rock_srcs[5] = "sprites/resources/rocks/CrystalSprites/b_tourmaline.png";
 rock_srcs[6] = "sprites/resources/rocks/CrystalSprites/hematite.png";
 rock_srcs[7] = "sprites/resources/rocks/CrystalSprites/ruby.png";
 
-mineral_srcs = "sprites/item/roguelikeitems.png";
+
 
 

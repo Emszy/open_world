@@ -210,15 +210,19 @@ function draw_layer0(map_array, pos_x, pos_y, size_x = 128, size_y = 128)
             break;
           case 12:
             context.drawImage(water1, pos_x, pos_y, size_x, size_y);
+            collision(player_x, player_y, 64, 64, pos_x - map_pos_x, pos_y - map_pos_y, size_x, size_y);
             break;
           case 13:
             context.drawImage(water2, pos_x, pos_y, size_x, size_y);
+            collision(player_x, player_y, 64, 64, pos_x - map_pos_x, pos_y - map_pos_y, size_x, size_y);
             break;
           case 14:
             context.drawImage(water3, pos_x, pos_y, size_x, size_y);
+            collision(player_x, player_y, 64, 64, pos_x - map_pos_x, pos_y - map_pos_y, size_x, size_y);
             break;
         }
       }
+      
       x = x + 1;
       pos_x = pos_x + size_x;
     }

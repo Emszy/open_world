@@ -8,21 +8,26 @@ function spawn_shapes()
   spawn_rocks();
   spawn_squares();
   spawn_stars();
+  spawn_enemies();
 }
 
 function spawn_castle_items()
 {
   for(var x = 0; x < crate.length; x++)
   {
-    context.drawImage(castle_image, crate[x].atlas_pos_x, crate[x].atlas_pos_y, crate[x].size_x, crate[x].size_y, crate[x].map_pos_x + map_pos_x, crate[x].map_pos_y + map_pos_y, crate[x].map_size_x, crate[x].map_size_y);
-    collision(crate[x].map_pos_x, crate[x].map_pos_y);
+    if (crate[x] && crate[x].map_pos_x - player_x < 750 && crate[x].map_pos_y - player_y < 750 && player_x - crate[x].map_pos_x < 750 && player_y - crate[x].map_pos_y < 750)
+    {
+      context.drawImage(castle_image, crate[x].atlas_pos_x, crate[x].atlas_pos_y, crate[x].size_x, crate[x].size_y, crate[x].map_pos_x + map_pos_x, crate[x].map_pos_y + map_pos_y, crate[x].map_size_x, crate[x].map_size_y);
+      collision(player_x, player_y, 64, 64, crate[x].map_pos_x, crate[x].map_pos_y);
+    }
   }
-
   for(var x = 0; x < anvils.length; x++)
   {
-    context.drawImage(castle_image, anvils[x].atlas_pos_x, anvils[x].atlas_pos_y, anvils[x].size_x, anvils[x].size_y, anvils[x].map_pos_x + map_pos_x, anvils[x].map_pos_y + map_pos_y, anvils[x].map_size_x, anvils[x].map_size_y);
-    collision(crate[x].map_pos_x, crate[x].map_pos_y);
-
+    if (anvils[x] && anvils[x].map_pos_x - player_x < 750 && anvils[x].map_pos_y - player_y < 750 && player_x - anvils[x].map_pos_x < 750 && player_y - anvils[x].map_pos_y < 750)
+    {
+      context.drawImage(castle_image, anvils[x].atlas_pos_x, anvils[x].atlas_pos_y, anvils[x].size_x, anvils[x].size_y, anvils[x].map_pos_x + map_pos_x, anvils[x].map_pos_y + map_pos_y, anvils[x].map_size_x, anvils[x].map_size_y);
+      collision(player_x, player_y, 64, 64, anvils[x].map_pos_x, anvils[x].map_pos_y);
+    }
   }
 }
 
@@ -37,11 +42,11 @@ function spawn_castle()
         context.drawImage(castle_image, castles[x][y].atlas_pos_x, castles[x][y].atlas_pos_y, castles[x][y].size_x, castles[x][y].size_y, castles[x][y].map_pos_x + map_pos_x, castles[x][y].map_pos_y + map_pos_y, castles[x][y].map_size_x, castles[x][y].map_size_y);
         if (castles[x][y].type == "castle wall")
         {
-          collision(castles[x][y].map_pos_x, castles[x][y].map_pos_y, 128, 128);
+          collision(player_x, player_y, 64, 64, castles[x][y].map_pos_x, castles[x][y].map_pos_y, 128, 128);
         }
         else if (castles[x][y].type == "castle corner")
         {
-          collision(castles[x][y].map_pos_x, castles[x][y].map_pos_y, 256, 256);
+          collision(player_x, player_y, 64, 64, castles[x][y].map_pos_x, castles[x][y].map_pos_y, 256, 256);
         }
       }
     }
@@ -57,7 +62,7 @@ function spawn_rocks()
       {
           context.drawImage(rock[x].image, 0, 0, 128, 128, rock[x].x + map_pos_x, rock[x].y + map_pos_y, 128, 128);
           context.drawImage(rock[x].mineral.image, rock[x].mineral.atlas_pos_x, rock[x].mineral.atlas_pos_y, 16, 16, rock[x].x + map_pos_x, rock[x].y + map_pos_y, 32, 32);
-          console.log(collision(rock[x].x, rock[x].y, 128, 128));
+          collision(player_x, player_y, 64, 64, rock[x].x, rock[x].y, 128, 128);
       }
     x++;
   }
@@ -71,12 +76,11 @@ function spawn_trees()
       if (trees[x] && trees[x].x - player_x < 750 && trees[x].y - player_y < 750 && player_x - trees[x].x < 750 && player_y - trees[x].y < 750)
       {
           context.drawImage(trees[x].image, trees[x].atlas_pos, 0, 128, 128, trees[x].x + map_pos_x, trees[x].y + map_pos_y, 128, 128);
-          console.log(collision(trees[x].x, trees[x].y, 128, 128, 1));
+          collision(player_x, player_y, 64, 64, trees[x].x, trees[x].y, 128, 128, 1);
 
       }
     x++;
   }
-
 }
 
 function spawn_squares()
@@ -97,9 +101,7 @@ function spawn_squares()
     }
     x++;
   }
-
 }
-
 
 function spawn_stars()
 {

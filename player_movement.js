@@ -23,7 +23,7 @@ function fire_bullet()
       player.bullets[player.bullets.length - 1].color = red;
       player.bullets[player.bullets.length - 1].x = player_x + 32;
       player.bullets[player.bullets.length - 1].y = player_y + 32;
-      player.bullets[player.bullets.length - 1].vel_x = 5;
+      player.bullets[player.bullets.length - 1].vel_x = 20;
       keys[39] = false;
   
     }
@@ -36,7 +36,7 @@ function fire_bullet()
       player.bullets[player.bullets.length - 1].color = red;
       player.bullets[player.bullets.length - 1].x = player_x + 32;
       player.bullets[player.bullets.length - 1].y = player_y + 32;
-      player.bullets[player.bullets.length - 1].vel_x = -5;
+      player.bullets[player.bullets.length - 1].vel_x = -20;
       keys[37] = false;
   
     }
@@ -49,7 +49,7 @@ function fire_bullet()
       player.bullets[player.bullets.length - 1].color = red;
       player.bullets[player.bullets.length - 1].x = player_x + 32;
       player.bullets[player.bullets.length - 1].y = player_y + 32;
-      player.bullets[player.bullets.length - 1].vel_y = -5;
+      player.bullets[player.bullets.length - 1].vel_y = -20;
       keys[38] = false;
     }
   }
@@ -61,7 +61,7 @@ function fire_bullet()
       player.bullets[player.bullets.length - 1].color = red;
       player.bullets[player.bullets.length - 1].x = player_x + 32;
       player.bullets[player.bullets.length - 1].y = player_y + 32;
-      player.bullets[player.bullets.length - 1].vel_y = 5;
+      player.bullets[player.bullets.length - 1].vel_y = 20;
       keys[40] = false;
     }
   }
